@@ -1,0 +1,73 @@
+ Step 1: Create a project folder:
+
+ `mkdir node-docker-app
+ cd node-docker-app`
+Step 2: Create a Start.js File
+
+Start.js
+
+const http = require('http');
+const hostname = '0.0.0.0';
+const port = 3000;
+
+const server = http.createServer((req, res) => {
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'text/plain');
+    res.end('Hello, World Shahzaib\n');
+});
+
+server.listen(port, hostname, () => {
+    console.log(`Server running at http://${hostname}:${port}/`);
+});
+
+
+Step 3: Write a package.json file
+
+
+package.json
+{
+  "name": "node-app",
+  "version": "1.0.0",
+  "description": "A Simple Node.js Application",
+  "main": "index.js",
+  "dependencies": {},
+  "scripts": {
+    "start": "node start.js"
+  }
+}
+
+
+Step 4: Write a Dockerfile
+
+Dockefile
+
+FROM node:14-alpine
+
+WORKDIR /app
+
+COPY package*.json ./
+
+RUN npm install
+
+COPY . .
+
+EXPOSE 3000
+
+ENV NAME project5
+CMD ["npm", "start"]
+
+Step 5: Build the Docker Image
+
+  `docker build -t new-app .`
+
+
+Step 6: Run the Docker Container
+
+  `docker run -d -p 3000:3000 new-app`
+
+
+
+
+Access your application at `http://localhost:3000`.
+
+
